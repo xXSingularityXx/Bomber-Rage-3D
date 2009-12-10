@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="brage3d" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin\Debug\brage3d" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj\Debug\" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="brage3d" prefix_auto="1" extension_auto="1" />
+				<Option object_output=".\.objs" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Linker>
+			<Add library="C:\Arquivos de Programas\CodeBlocks\MinGW\lib\libmingw32.a" />
+			<Add library="C:\Arquivos de Programas\CodeBlocks\MinGW\lib\libSDL.dll.a" />
+			<Add library="C:\Arquivos de Programas\CodeBlocks\MinGW\lib\libSDLmain.a" />
+			<Add library="opengl32" />
+			<Add library="glu32" />
+			<Add library="winmm" />
+			<Add library="gdi32" />
+		</Linker>
+		<Unit filename="bomb.cpp" />
+		<Unit filename="bomb.hpp" />
+		<Unit filename="enemy.cpp" />
+		<Unit filename="enemy.hpp" />
+		<Unit filename="explosion.cpp" />
+		<Unit filename="explosion.hpp" />
+		<Unit filename="item.cpp" />
+		<Unit filename="item.hpp" />
+		<Unit filename="level.cpp" />
+		<Unit filename="level.hpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="modelLoader\AnimatedNode.cpp" />
+		<Unit filename="modelLoader\AnimatedNode.h" />
+		<Unit filename="modelLoader\Arrays.h" />
+		<Unit filename="modelLoader\ColorRGB.h" />
+		<Unit filename="modelLoader\ImageLoader.cpp" />
+		<Unit filename="modelLoader\ImageLoader.h" />
+		<Unit filename="modelLoader\MD2Mesh.cpp" />
+		<Unit filename="modelLoader\MD2Mesh.h" />
+		<Unit filename="modelLoader\MD2Normals.h" />
+		<Unit filename="modelLoader\Mesh.cpp" />
+		<Unit filename="modelLoader\Mesh.h" />
+		<Unit filename="modelLoader\MeshLoader.cpp" />
+		<Unit filename="modelLoader\MeshLoader.h" />
+		<Unit filename="modelLoader\Node.cpp" />
+		<Unit filename="modelLoader\Node.h" />
+		<Unit filename="modelLoader\ObjectManager.cpp" />
+		<Unit filename="modelLoader\ObjectManager.h" />
+		<Unit filename="modelLoader\Size2D.h" />
+		<Unit filename="modelLoader\StaticNode.cpp" />
+		<Unit filename="modelLoader\StaticNode.h" />
+		<Unit filename="modelLoader\Terrain.cpp" />
+		<Unit filename="modelLoader\Terrain.h" />
+		<Unit filename="modelLoader\Texture.cpp" />
+		<Unit filename="modelLoader\Texture.h" />
+		<Unit filename="modelLoader\Vector3D.cpp" />
+		<Unit filename="modelLoader\Vector3D.h" />
+		<Unit filename="modelLoader\fileHandler.cpp" />
+		<Unit filename="modelLoader\fileHandler.h" />
+		<Unit filename="modelLoader\main.cpp" />
+		<Unit filename="object.cpp" />
+		<Unit filename="object.hpp" />
+		<Unit filename="player.cpp" />
+		<Unit filename="player.hpp" />
+		<Unit filename="texture.cpp" />
+		<Unit filename="texture.hpp" />
+		<Unit filename="tile.cpp" />
+		<Unit filename="tile.hpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+			<lib_finder disable_auto="1" />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
