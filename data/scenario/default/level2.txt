@@ -1,0 +1,26 @@
+{0
+s0 data/scenario/default/otop1.bmp
+s1 data/scenario/default/ofront1.bmp
+s2 data/scenario/default/oback1.bmp
+s3 data/scenario/default/oright1.bmp
+s4 data/scenario/default/oleft1.bmp
+s5 data/scenario/default/grassfloor01.bmp
+s6 data/scenario/default/bricks.bmp
+s7 data/scenario/default/metal.bmp
+tdata/scenario/default/tiles.txt
+d15 13
+l
+wwwwwwwwwwwwwww
+w1-.........-2w
+w-W.W.W.W.W.W-w
+w.............w
+w.W.WWW.W.W.W.w
+w.....---.....w
+w.W.W.W5W.W.W.w
+w.....---.W...w
+w.W.W.W.W.W.W.w
+w.............w
+w-W.W.W.W.W.W-w
+w3-.........-4w
+wwwwwwwwwwwwwww
+}
