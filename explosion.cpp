@@ -2,6 +2,7 @@
 #include "explosion.hpp"
 #include "bomb.hpp"
 #include "enemy.hpp"
+#include "item.hpp"
 
 #define NUM_PARTICLES 1000
 
@@ -58,6 +59,8 @@ void Explosion::update()
         }
         else if ((*it)->type() == "enemy")
             ((Enemy *)(*it))->die();
+        else if ((*it)->type() == "item")
+            ((Item *)(*it))->destroy();
     }
 
     for(int i = 0; i < _numParticles; ++i)

@@ -122,6 +122,17 @@ void Level::load(const char *filename, unsigned long number)
         this->new_object(*it, breakable_tiles[i] % this->_width, breakable_tiles[i] / this->_width);
         breakable_tiles.erase(breakable_tiles.begin() + i);
     }
+
+    for (k = 0; k < this->_width * this-> _height; k++)
+    {
+        bool new_enemy;
+        unsigned char new_tile;
+
+        if ((new_tile = this->_tiles[this->_level[k]]->init(new_enemy)) != 0)
+            this->_level[k] = new_tile;
+        if (new_enemy)
+            this->new_object(new Enemy(*this), k % this->_width, k / this->_width);
+    }
 }
 
 void Level::draw()
@@ -200,17 +211,9 @@ void Level::draw()
         this->_players[i].draw();
     for (unsigned long k = 0; k < this->_width * this->_height; k++)
     {
-        bool new_enemy, dummy;
-        unsigned char new_tile;
-
         glPushMatrix();
         glTranslatef((double)(k % this->_width), 0.0, (double)(k / this->_width));
-        if ((new_tile = this->_tiles[this->_level[k]]->draw(new_enemy)) != 0)
-            this->_tiles[this->_level[k] = new_tile]->draw(dummy);
-
-        if (new_enemy)
-            this->new_object(new Enemy(*this), k % this->_width, k / this->_width);
-
+        this->_tiles[this->_level[k]]->draw();
         for (std::list<Object *>::iterator it = this->_objects[k].begin();
             it != this->_objects[k].end(); it++)
             (*it)->draw();

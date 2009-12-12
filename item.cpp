@@ -35,3 +35,8 @@ void Item::draw()
         gluDeleteQuadric(quad);
     }
 }
+
+void Item::destroy()
+{
+    this->_terminate = true;
+}

@@ -22,7 +22,8 @@ public:
     bool walkable() { return _walkable; }
     bool breakable() { return _breakable; }
 
-    unsigned char draw(bool &new_enemy);
+    unsigned char init(bool &new_enemy);
+    void draw();
 };
 
 #endif

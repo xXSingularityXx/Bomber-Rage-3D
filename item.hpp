@@ -18,8 +18,8 @@ public:
         boot,
 
         remote_bomb,
-        wall_ghost,
-        bomb_ghost,
+        wall_pass_through,
+        bomb_pass_through,
         spike_bomb,
         mine,
 
@@ -45,6 +45,7 @@ public:
     void draw();
     std::string type() { return "item"; }
 
+    void destroy();
 };
 
 #endif

@@ -111,19 +111,10 @@ Tile::~Tile()
         delete [] this->_clones;
 }
 
-unsigned char Tile::draw(bool &new_enemy)
+unsigned char Tile::init(bool &new_enemy)
 {
-    if (this->_enemy)
-    {
-        new_enemy = true;
-        this->_enemy = false;
-    }
-    else
-        new_enemy = false;
-
-    if (this->_probabilities_size == 0)
-        glCallList(this->_display_list);
-    else
+    new_enemy = this->_enemy;
+    if (this->_probabilities_size > 0)
     {
         unsigned long i;
         double probability = (double)rand() / RAND_MAX;
@@ -134,4 +125,9 @@ unsigned char Tile::draw(bool &new_enemy)
         return this->_clones[i];
     }
     return 0;
+}
+
+void Tile::draw()
+{
+    glCallList(this->_display_list);
 }
