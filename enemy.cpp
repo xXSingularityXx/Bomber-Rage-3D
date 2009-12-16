@@ -7,11 +7,12 @@ Enemy::Enemy(Level &level, double speed): _pos_x(0.5), _pos_y(0.5), _speed(speed
 {
     this->_dir = rand() % 4;
 
-    Texture* tex01 = objManager->createTexture("pknight.BMP");
+    Texture* tex01 = objManager->createTexture("data/models/bomber.bmp");
 
 
-	Vector3D v(0.02,0.02,0.02);
-    this->_node = objManager->createNode("pknight.MD2");
+	Vector3D v(7.0, 7.0, 7.0);
+	//Vector3D v(0.02, 0.02, 0.02);
+    this->_node = objManager->createNode("data/models/bomber.MD2");
     this->_node->setScale(v);
     this->_node->setAnimation("stand");
 
@@ -120,19 +121,26 @@ void Enemy::update()
             this->_move_y = 1;
         }
     }
-    this->_node->advanceFrame(0.005);
+    //this->_node->advanceFrame(0.005);
 
 }
 
 void Enemy::draw()
 {
+    static GLfloat ambient[] = {0.2, 0.2, 0.2, 1.0};
+    static GLfloat diffuse[] = {1.0, 1.0, 1.0, 1.0};
+
     glPushMatrix();
     glPushAttrib(GL_ALL_ATTRIB_BITS);
-    glEnable(GL_DEPTH_TEST);
+    //glEnable(GL_DEPTH_TEST);
 
-    glTranslatef(this->_pos_x, 0.4, this->_pos_y);
-    glRotatef(90.0 * (1 - this->_dir), 0.0, 1.0, 0.0);
-    glFrontFace(GL_CW);
+    //glTranslatef(this->_pos_x, 0.0, this->_pos_y);
+    //glRotatef(90.0 * (1 - this->_dir), 0.0, 1.0, 0.0);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
+    glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
+    //glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, diffuse);
+    this->_node->setPosition(Vector3D(this->_pos_y, this->_pos_x, 0.0));
+    this->_node->setRotation(90.0 * (1 - this->_dir), Vector3D(0.0, 0.0, 1.0));
     this->_node->draw();
 
     glPopMatrix();

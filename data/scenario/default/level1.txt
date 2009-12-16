@@ -11,7 +11,7 @@ tdata/scenario/default/tiles.txt
 d15 13
 l
 SSSSSSSSSSSSSSS
-S1-.........-2S
+S1-.E.......-2S
 S-W.W.W.W.W.W-S
 S.............S
 S.W.WWW.W.W.W.S
@@ -19,8 +19,8 @@ S..E..---.....S
 S.W.W.W5W.W.W.S
 S.....---.W...S
 S.W.W.W.W.W.W.S
-S.............S
-S-W.W.W.W.W.W-S
+S....E.....E..S
+S-W.W.W.WEW.W-S
 S3-.........-4S
 SSSSSSSSSSSSSSS
 ib3 if3 is3

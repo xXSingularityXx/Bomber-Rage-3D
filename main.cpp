@@ -178,11 +178,12 @@ int main(int argc, char *argv[])
 {
     GLint ticks = 0;
     int fs = 0;
+    bool warp_mouse = true;
 
     SDL_Init(SDL_INIT_VIDEO);
 
     SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
-    screen = SDL_SetVideoMode(800, 600, 32, SDL_OPENGL | SDL_FULLSCREEN);
+    screen = SDL_SetVideoMode(800, 600, 32, SDL_OPENGL/* | SDL_FULLSCREEN*/);
     if (!screen)
     {
         fprintf(stderr, "Couldn't set GL video mode: %s\n", SDL_GetError());
@@ -207,9 +208,13 @@ int main(int argc, char *argv[])
                     done = true;
                     break;
                 case SDL_MOUSEMOTION:
-                    current_level.player(0).rotate((double)event.motion.xrel * 0.006);
-                    current_level.player(0).vertical_rotate((double)event.motion.yrel * 0.006);
-                    //SDL_WarpMouse(screen->w / 2, screen->h / 2);
+                    if (warp_mouse)
+                    {
+                        current_level.player(0).rotate((double)event.motion.xrel * 0.006);
+                        current_level.player(0).vertical_rotate((double)event.motion.yrel * 0.006);
+                        SDL_WarpMouse(screen->w / 2, screen->h / 2);
+                    }
+                    warp_mouse = !warp_mouse;
                     break;
             }
         }

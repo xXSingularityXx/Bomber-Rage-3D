@@ -33,6 +33,7 @@ void AnimatedNode::draw()
 {
 	glPushAttrib(GL_ENABLE_BIT);
 	glPushMatrix();
+    glFrontFace(GL_CW);
 
 	if (m_isTexturizedNode)
 	{
@@ -42,7 +43,7 @@ void AnimatedNode::draw()
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 		// We don't combine the color with the original surface color, use only the texture map.
-		glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
+		//glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_REPLACE);
 	}
 	else
 	{
@@ -86,6 +87,7 @@ void AnimatedNode::draw()
 	glBegin(GL_TRIANGLES);
 	  for (int i = 0; i < m_md2Mesh->m_header.num_tris; ++i)
       {
+            float v[3][3];
 		  	// Draw each vertex of this triangle
 			for (int j = 0; j < 3; ++j)
 			{
@@ -98,7 +100,7 @@ void AnimatedNode::draw()
 				MD2::VertexCoord *pVertB = &pFrameB->verts[m_md2Mesh->m_tris[i].index_vert[j]];
 
 				// if we want load it with a texture
-				if (m_isTexturizedNode)
+				/*if (m_isTexturizedNode)
 				{
 					MD2::TexCoord *pTexCoords = &m_md2Mesh->m_texCoord[m_md2Mesh->m_tris[i].index_st[j]];
 					 // Compute final texture coords.
@@ -106,10 +108,10 @@ void AnimatedNode::draw()
 					GLfloat t = static_cast<GLfloat>(pTexCoords->t) / m_md2Mesh->m_header.skinheight;
 
 					glTexCoord2f (s, 1.0f - t);
-				}
+				}*/
 				//MD2_NORMALS
 				// Compute interpolated normal vector
-				const GLfloat *normA = &MD2_NORMALS[pVertA->lightnormalindex];
+				/*const GLfloat *normA = &MD2_NORMALS[pVertA->lightnormalindex];
 				const GLfloat *normB = &MD2_NORMALS[pVertB->lightnormalindex];
 
 				float n[3];
@@ -118,8 +120,8 @@ void AnimatedNode::draw()
 				n[2] = normA[2] + frac * (normB[2] - normA[2]);
 
 				glNormal3fv (n);
-
-				float vecA[3], vecB[3], v[3];
+*/
+				float vecA[3], vecB[3];
 				// First, uncompress vertex positions
 				vecA[0] = pFrameA->scale[0] * pVertA->v[0] + pFrameA->translate[0];
 				vecA[1] = pFrameA->scale[1] * pVertA->v[1] + pFrameA->translate[1];
@@ -130,15 +132,47 @@ void AnimatedNode::draw()
 				vecB[2] = pFrameB->scale[2] * pVertB->v[2] + pFrameB->translate[2];
 
 					    // Linear interpolation and scaling
-				v[0] = (vecA[0] + frac * (vecB[0] - vecA[0]));
-				v[1] = (vecA[1] + frac * (vecB[1] - vecA[1]));
-				v[2] = (vecA[2] + frac * (vecB[2] - vecA[2]));
+				v[j][0] = (vecA[0] + frac * (vecB[0] - vecA[0]));
+				v[j][1] = (vecA[1] + frac * (vecB[1] - vecA[1]));
+				v[j][2] = (vecA[2] + frac * (vecB[2] - vecA[2]));
 
-				glVertex3fv (v);
-			 }
+				//glVertex3fv (v);
+			}
+
+            float a[3], b[3], n[3], l;
+            a[0] = v[0][0] - v[1][0];
+            a[1] = v[0][1] - v[1][1];
+            a[2] = v[0][2] - v[1][2];
+            b[0] = v[1][0] - v[2][0];
+            b[1] = v[1][1] - v[2][1];
+            b[2] = v[1][2] - v[2][2];
+            n[0] = a[2] * b[1] - a[1] * b[2];
+            n[1] = a[0] * b[2] - a[2] * b[0];
+            n[2] = a[1] * b[0] - a[0] * b[1];
+            l = sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]);
+            if (l == 0.0f)
+                l = 1.0f;
+            n[0] /= l;
+            n[1] /= l;
+            n[2] /= l;
+            glNormal3fv(n);
+            for (int j = 0; j < 3; ++j)
+            {
+				if (m_isTexturizedNode)
+				{
+					MD2::TexCoord *pTexCoords = &m_md2Mesh->m_texCoord[m_md2Mesh->m_tris[i].index_st[j]];
+					 // Compute final texture coords.
+					GLfloat s = static_cast<GLfloat>(pTexCoords->s) / m_md2Mesh->m_header.skinwidth;
+					GLfloat t = static_cast<GLfloat>(pTexCoords->t) / m_md2Mesh->m_header.skinheight;
+
+					glTexCoord2f (s, 1.0f - t);
+				}
+                glVertex3fv(v[j]);
+            }
 		}
 
 	glEnd();
+
 	glPopAttrib();
 	glPopMatrix();
 }
