@@ -2,6 +2,7 @@
 #define _BOMBER_PLAYER
 
 #include "object.hpp"
+#include "modelLoader.hpp"
 
 class Player: public Object
 {
@@ -18,7 +19,7 @@ private:
     double _speed;
     axis _current_axis;
     unsigned long _max_bombs, _bombs, _explosion_size;
-
+    Node* _node;
 public:
     Player();
     virtual ~Player() { }

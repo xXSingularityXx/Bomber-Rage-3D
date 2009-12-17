@@ -133,6 +133,9 @@ void Level::load(const char *filename, unsigned long number)
         if (new_enemy)
             this->new_object(new Enemy(*this), k % this->_width, k / this->_width);
     }
+
+    for (int i = 0; i < this->_num_players; i++)
+        this->_players[i].init();
 }
 
 void Level::draw()
@@ -208,7 +211,12 @@ void Level::draw()
     glEnable(GL_FOG);
 
     for (int i = 0; i < this->_num_players; i++)
+    {
+        glPushMatrix();
+        glTranslatef(this->_players[i].x(), 0.0, this->_players[i].y());
         this->_players[i].draw();
+        glPopMatrix();
+    }
     for (unsigned long k = 0; k < this->_width * this->_height; k++)
     {
         glPushMatrix();
