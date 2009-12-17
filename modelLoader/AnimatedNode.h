@@ -13,6 +13,7 @@ public:
 	~AnimatedNode(){}
 
 	void setAnimation(std::string _animName);
+	void setAnimation(int startFrame, int endFrame);
 	void advanceFrame(float _dt);
 
 	virtual void draw();

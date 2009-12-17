@@ -26,6 +26,7 @@ public:
 	virtual void draw() = 0;
 	virtual void advanceFrame(float _dt) = 0;
 	virtual void setAnimation(std::string _animName) = 0;
+    virtual void setAnimation(int, int) = 0;
 
 protected:
 	Vector3D m_Position;

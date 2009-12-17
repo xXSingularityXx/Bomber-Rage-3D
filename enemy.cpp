@@ -7,14 +7,14 @@ Enemy::Enemy(Level &level, double speed): _pos_x(0.5), _pos_y(0.5), _speed(speed
 {
     this->_dir = rand() % 4;
 
-    Texture* tex01 = objManager->createTexture("data/models/bomber.bmp");
+    Texture* tex01 = objManager->createTexture("data/models/spider.bmp");
 
 
-	Vector3D v(7.0, 7.0, 7.0);
-	//Vector3D v(0.02, 0.02, 0.02);
-    this->_node = objManager->createNode("data/models/bomber.MD2");
+	//Vector3D v(7.0, 7.0, 7.0);
+	Vector3D v(0.02, 0.02, 0.02);
+    this->_node = objManager->createNode("data/models/spider.MD2");
     this->_node->setScale(v);
-    this->_node->setAnimation("stand");
+    this->_node->setAnimation(0,17);
 
     this->_node->setTexture(tex01);
     delete tex01;
@@ -121,7 +121,8 @@ void Enemy::update()
             this->_move_y = 1;
         }
     }
-    //this->_node->advanceFrame(0.005);
+
+    this->_node->advanceFrame(0.005);
 
 }
 
@@ -140,7 +141,7 @@ void Enemy::draw()
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
     //glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, diffuse);
     this->_node->setPosition(Vector3D(this->_pos_y, this->_pos_x, 0.0));
-    this->_node->setRotation(90.0 * (1 - this->_dir), Vector3D(0.0, 0.0, 1.0));
+    this->_node->setRotation(90.0 * (2+this->_dir), Vector3D(0.0, 0.0, 1.0));
     this->_node->draw();
 
     glPopMatrix();

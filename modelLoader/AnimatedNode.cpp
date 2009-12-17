@@ -10,7 +10,11 @@ void AnimatedNode::setAnimation(std::string _animName)
 		std::cout << "Animation not found.";
 	}
 }
-
+void AnimatedNode::setAnimation(int startFrame, int endFrame)
+{
+	m_md2Mesh->m_frameInfo.startFrame = startFrame;
+	m_md2Mesh->m_frameInfo.endFrame = endFrame;
+}
 void AnimatedNode::advanceFrame(float _dt)
 {
 	// if time is negative dont do anything

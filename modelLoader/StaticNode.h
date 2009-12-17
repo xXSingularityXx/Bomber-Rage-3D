@@ -19,7 +19,7 @@ public:
 	virtual void draw();
 	virtual void advanceFrame(float _dt){}
 	virtual void setAnimation(std::string _animName){}
-
+    virtual void setAnimation(int s, int e){}
 };
 
 #endif
