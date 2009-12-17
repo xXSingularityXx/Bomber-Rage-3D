@@ -11,11 +11,10 @@
 #include "player.hpp"
 #include "level.hpp"
 #include "bomb.hpp"
-/*
+
 #ifndef M_PI
 #define M_PI 3.14159265
 #endif
-*/
 
 #define FRAMESKIPPING 0
 #define PLAYER_HEIGHT 0.65
@@ -24,6 +23,8 @@ static GLint T0 = 0;
 static GLint Frames = 0;
 SDL_Surface *screen;
 static Level current_level(1);
+
+bool tperson = false;
 
 void draw(bool render)
 {
@@ -36,11 +37,18 @@ void draw(bool render)
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         glPushMatrix();
-        gluLookAt(current_level.player(0).x(), PLAYER_HEIGHT, current_level.player(0).y(),
-            current_level.player(0).x() + cos(current_level.player(0).rot()),
-            sin(current_level.player(0).vrot()) + PLAYER_HEIGHT,
-            current_level.player(0).y() + sin(current_level.player(0).rot()),
-            0.0, 1.0, 0.0);
+        if (tperson)
+            gluLookAt(current_level.player(0).x() - 2.0 * cos(current_level.player(0).rot()) * (sin(current_level.player(0).vrot()) * 0.1 - 0.05 + 0.75),
+                current_level.player(0).vrot() * 0.4 + M_PI * 0.2 + PLAYER_HEIGHT - 0.05,
+                current_level.player(0).y() - 2.0 * sin(current_level.player(0).rot()) * (sin(current_level.player(0).vrot()) * 0.1 - 0.05 + 0.75),
+                current_level.player(0).x(), PLAYER_HEIGHT, current_level.player(0).y(),
+                0.0, 1.0, 0.0);
+        else
+            gluLookAt(current_level.player(0).x(), PLAYER_HEIGHT, current_level.player(0).y(),
+                current_level.player(0).x() + cos(current_level.player(0).rot()),
+                sin(current_level.player(0).vrot()) + PLAYER_HEIGHT,
+                current_level.player(0).y() + sin(current_level.player(0).rot()),
+                0.0, 1.0, 0.0);
 
         //gluLookAt(3.0, 3.0, 3.0, current_level.player(0).x(), PLAYER_HEIGHT, current_level.player(0).y(), 0.0, 1.0, 0.0);
 
@@ -164,6 +172,11 @@ void process_keys()
                 current_level.new_object(new Bomb(current_level.player(0).x(), current_level.player(0).y(), current_level.player(0).explosion_size(), current_level, 0), x, y);
             }
         }
+    }
+    if (keys[SDLK_c])
+    {
+        tperson = !tperson;
+        keys[SDLK_c] = false;
     }
 
     if (fmul != 0.0 && smul != 0.0)
