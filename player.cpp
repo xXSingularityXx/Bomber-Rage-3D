@@ -5,7 +5,7 @@
     #define M_PI 3.14159265
 #endif
 
-Player::Player() : _x(0.0), _y(0.0), _rot(0.0), _vrot(0.0), _speed(0.03), _current_axis(HORIZONTAL), _max_bombs(2), _bombs(0), _explosion_size(2)
+Player::Player() : _x(0.0), _y(0.0), _rot(0.0), _vrot(0.0), _speed(0.03), _current_axis(HORIZONTAL), _max_bombs(2), _bombs(0), _explosion_size(2), _face_dir(3), _alive(true)
 {
 }
 
@@ -37,7 +37,13 @@ void Player::draw()
     glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT, ambient);
     glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, diffuse);
 
-    this->_node->setRotation(90.0 - _rot * 180.0 / M_PI, Vector3D(0.0, 0.0, 1.0));
+    if (_alive)
+        this->_node->setRotation(270.0 - _face_dir * 90.0, Vector3D(0.0, 0.0, 1.0));
+    else
+    {
+        this->_node->setRotation(-90.0, Vector3D(0.0, 1.0, 0.0));
+        this->_node->setPosition(Vector3D(0.5, 0.0, 0.1));
+    }
     this->_node->draw();
 
     glPopAttrib();
@@ -45,10 +51,23 @@ void Player::draw()
 
 void Player::move(double mul)
 {
-    if (_current_axis == HORIZONTAL)
-        _x += _speed * mul;
-    else
-        _y += _speed * mul;
+    if (_alive)
+        if (_current_axis == HORIZONTAL)
+        {
+            _x += _speed * mul;
+            if (mul > 0.0)
+                _face_dir = 2;
+            else if (mul < 0.0)
+                _face_dir = 0;
+        }
+        else
+        {
+            _y += _speed * mul;
+            if (mul > 0.0)
+                _face_dir = 3;
+            else if (mul < 0.0)
+                _face_dir = 1;
+        }
 }
 
 void Player::rotate(double angle)
@@ -67,4 +86,9 @@ void Player::vertical_rotate(double angle)
         _vrot = M_PI/2;
     else if (_vrot < -M_PI/2)
         _vrot = -M_PI/2;
+}
+
+void Player::die()
+{
+    _alive = false;
 }

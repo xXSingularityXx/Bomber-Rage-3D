@@ -20,6 +20,8 @@ private:
     axis _current_axis;
     unsigned long _max_bombs, _bombs, _explosion_size;
     Node* _node;
+    int _face_dir;
+    bool _alive;
 public:
     Player();
     virtual ~Player() { }
@@ -50,6 +52,8 @@ public:
     void strafe(double mul);
     void rotate(double angle);
     void vertical_rotate(double angle);
+
+    void die();
 };
 
 #endif

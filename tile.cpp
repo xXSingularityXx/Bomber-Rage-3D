@@ -41,8 +41,17 @@ void Tile::load_tiles(const char *filename, const std::vector<GLuint> &textures,
                 tiles_file >> command;
                 switch (command)
                 {
+                case 'f':
+                    glBegin(GL_TRIANGLE_FAN);
+                    break;
                 case 'q':
                     glBegin(GL_QUADS);
+                    break;
+                case 's':
+                    glBegin(GL_TRIANGLE_STRIP);
+                    break;
+                case 't':
+                    glBegin(GL_TRIANGLES);
                     break;
                 }
                 break;

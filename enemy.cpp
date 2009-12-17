@@ -122,6 +122,31 @@ void Enemy::update()
         }
     }
 
+    for (int i = 0; i < this->_level->num_players(); i++)
+    {
+        unsigned long sx = (unsigned long)(this->_level->player(i).x());
+        unsigned long sy = (unsigned long)(this->_level->player(i).y());
+        double fx = this->_level->player(i).x() - (double)sx;
+        double fy = this->_level->player(i).y() - (double)sy;
+        if (sx == this->_x)
+        {
+            if (sy == this->_y)
+                this->_level->player(i).die();
+            else if (sy == this->_y + 1 && fy < this->_pos_y && fy + this->_pos_y < 1.0)
+                this->_level->player(i).die();
+            else if (sy == this->_y - 1 && fy > this->_pos_y && fy + this->_pos_y < 1.0)
+                this->_level->player(i).die();
+
+        }
+        else if (sy == this->_y)
+        {
+            if (sx == this->_x + 1 && fx < this->_pos_x && fx + this->_pos_x < 1.0)
+                this->_level->player(i).die();
+            else if (sx == this->_x - 1 && fx > this->_pos_x && fx + this->_pos_x < 1.0)
+                this->_level->player(i).die();
+        }
+    }
+
     this->_node->advanceFrame(0.005);
 
 }

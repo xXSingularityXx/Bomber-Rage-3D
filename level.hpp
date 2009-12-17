@@ -28,6 +28,7 @@ public:
     unsigned char *data() { return _level; }
     unsigned long width() { return _width; }
     unsigned long height() { return _height; }
+    int num_players() { return _num_players; }
     Player &player(int number) { return _players[number]; }
     Tile **tiles() { return _tiles; }
     std::list<Object *> &objects(unsigned long x, unsigned long y) { return _objects[x + y * _width]; }

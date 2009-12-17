@@ -49,6 +49,9 @@ void Explosion::init()
 
 void Explosion::update()
 {
+    for (int i = 0; i < this->_level->num_players(); i++)
+        if (this->_x == (unsigned long)(this->_level->player(i).x()) && this->_y == (unsigned long)(this->_level->player(i).y()))
+            this->_level->player(i).die();
 
     for (std::list<Object *>::iterator it = this->_level->objects(this->_x, this->_y).begin(); it != this->_level->objects(this->_x, this->_y).end(); it++)
     {
